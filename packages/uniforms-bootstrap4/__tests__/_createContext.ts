@@ -7,6 +7,7 @@ const randomId = randomIds();
 export default function createContext(
   schema?: object,
   context?: Partial<Context<any>>,
+  schemaOptions?: {},
 ): { context: Context<any> } {
   return {
     context: {
@@ -21,7 +22,7 @@ export default function createContext(
       submitting: false,
       validating: false,
       ...context,
-      schema: createSchema(schema),
+      schema: createSchema(schema, schemaOptions),
       state: {
         disabled: false,
         label: false,

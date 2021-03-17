@@ -38,7 +38,7 @@ test('<ListField> - renders correct label (specified)', () => {
   );
 });
 
-test('<ListField> - renders correct numer of items with initialCount (specified)', () => {
+test('<ListField> - renders correct number of items with initialCount (specified)', () => {
   const element = <ListField name="x" initialCount={3} />;
   const wrapper = mount(
     element,
@@ -141,4 +141,24 @@ test('<ListField> - renders correct error text (showInlineError=false)', () => {
   );
 
   expect(wrapper.find('.text-danger')).toHaveLength(0);
+});
+
+test('<ListField> - renders correct number of items with requiredByDefault schema option', () => {
+  const element = (
+    <ListField name="x" initialCount={3} addIcon="+" label="ListFieldLabel" />
+  );
+  const wrapper = mount(
+    element,
+    createContext(
+      { x: { type: Array }, 'x.$': { type: String } },
+      {},
+      { requiredByDefault: false },
+    ),
+  );
+
+  expect(
+    wrapper.find(ListAddField).childAt(0).childAt(0).simulate('click'),
+  ).toBeTruthy();
+  expect(wrapper.find('i').at(0).simulate('click')).toBeTruthy();
+  expect(wrapper.find(ListItemField)).toHaveLength(4);
 });
